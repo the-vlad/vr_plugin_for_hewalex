@@ -1,0 +1,163 @@
+// $primary: #e3a14e;
+$primary: #1d1d1b;
+$primary-dk: #d6933e;
+$accent-green: #1c8254;
+$accent-gold: #e3a14e;
+$accent-gold-dk: #d6933ed9;
+$black: #1d1d1b;
+$neutral-dk: #898989;
+$neutral-md: #efefe9;
+$neutral-lt: #ffe5e0;
+$white: #ffffff;
+$error-dk: #db4a79;
+$error-lt: #ffe5e0;
+$warning-dk: #dba31f;
+$warning-lt: #fff8d4;
+$success-dk: #45cd7c;
+$success-lt: #d6f9ce;
+
+$shadow: #00000014;
+$border: #c1c1c1;
+$download-bg: #e5e5e5;
+$border-search: #f4f7f8;
+$search-placeholder: #6a7272;
+$secondary: #ffffff;
+$accent: #000000;
+
+$font-family: "Mukta", sans-serif;
+$font-awesome: "Font Awesome 5 Free";
+$shadow-s: 0 1px 2px rgba($shadow, 0.08);
+$shadow-m: 0 2px 8px rgba($shadow, 0.08);
+$shadow-l: 0 4px 16px rgba($shadow, 0.08);
+
+$transition: all 0.3s ease-out;
+
+$breakpoints: (
+  xxs: 420.01px,
+  xs: 576.01px,
+  sm: 768.01px,
+  md: 992.01px,
+  lg: 1200.01px,
+  hd: 1440.01px,
+  beforehd: 1790.01px,
+  fullhd: 1920.01px,
+);
+
+.btn-primary-shop {
+  background: #e3a14e;
+  padding: 15px 30px;
+  font-size: 16px;
+  color: #fff;
+  border-radius: 4px;
+}
+
+.disabledState {
+  background: transparent !important;
+  border: 2px solid #ddd;
+  color: #ddd !important;
+}
+
+.currency{
+  text-transform:lowercase;
+  font-size:14px;
+  padding-left:3px;
+}
+
+
+.empty_img{
+  filter: gray; /* IE6-9 */
+  -webkit-filter: grayscale(1); /* Google Chrome, Safari 6+ & Opera 15+ */
+  filter: grayscale(1); /* Microsoft Edge and Firefox 35+ */
+  opacity:0.2;
+  margin-top:30%;
+  margin-bottom:30%;
+}
+
+
+.backtoshop{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  float:left;
+  position:absolute;
+  a{
+  color:#e3a14e!important;
+  text-transform: uppercase;
+  font-weight:500;
+  font-size:14px;
+  text-decoration: none!important;
+  transition:all 0.4 ease-out;
+  }
+  &:hover{
+    transition:all 0.4 ease-out;
+    transform:scale(0.92);
+  }
+  &::before{
+    content:"";
+    background-image: url('./../img/arrow-down.svg');
+    background-size:contain;
+    width:15px;
+    height: 15px;
+    display:flex;
+    background-repeat: no-repeat;
+    background-size:containe;
+    transform: rotate(90deg);
+    margin-right:5px;
+  }
+  
+
+}
+
+
+
+@mixin noticifaction-prototype($background-color, $font-color, $icon) {
+  background: $background-color;
+  padding: 16px 20px 16px 56px;
+  position: relative;
+  color: $font-color;
+  text-transform: none;
+  font-size: 14px;
+  line-height: 1.64;
+
+  * {
+    color: $font-color;
+    font-size: 14px;
+    line-height: 1.64;
+    text-transform: none;
+  }
+
+  &::before {
+    position: absolute;
+    content: $icon;
+    top: calc(50% - 12.5px);
+    left: 16px;
+    width: 25px;
+    height: 25px;
+  }
+}
+
+.notification {
+  &-alert {
+    @include noticifaction-prototype(
+      $error-lt,
+      $error-dk,
+      url("../../dist/images/error.svg")
+    );
+  }
+
+  &-warning {
+    @include noticifaction-prototype(
+      $warning-lt,
+      $warning-dk,
+      url("../../dist/images/warning.svg")
+    );
+  }
+
+  &-success {
+    @include noticifaction-prototype(
+      $success-lt,
+      $success-dk,
+      url("../../dist/images/checkmark.svg")
+    );
+  }
+}

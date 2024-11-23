@@ -1,0 +1,64 @@
+@import "../../breakpoints.scss";
+
+.hewalex-single-product__sidebar {
+    display: flex;
+    flex-direction: column;
+    width: 31%;
+    @include respond-below(md) {
+      width:100%;
+     }
+    h3 {
+      padding-bottom: 15px;
+      border-bottom: 2px solid #ddd;
+      color: #1d1d1b;
+      margin-bottom: 20px;
+      @include respond-below(lg) {
+       font-size:27px;
+      }
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      th {
+        padding-bottom: 5px;
+        border-bottom: 2px solid #ddd;
+        text-align: left;
+      }
+  
+      td {
+        vertical-align: middle;
+        padding-right: 15px;
+        border-bottom: 2px solid #ddd;
+      }
+  
+      .cart-remove-btn {
+        text-transform: lowercase;
+        color: #e3a14e;
+      }
+    }
+    .make-order-btn {
+      background-color: #e3a14e;
+      color: #fff;
+      padding: 5px;
+      width: 100%;
+      text-align: center;
+      // margin-top: 20px;
+      border-radius: 4px;
+    }
+  }
+  .page-template-page-template-instalator-oze-thankyou {
+    #content {
+      padding-bottom: 200px;
+    }
+    .btn-thankyou {
+      padding: 10px 30px;
+      background: #e3a14e;
+      color: #fff;
+      border-radius: 4px;
+      margin: 0 auto;
+      display: flex;
+      max-width: fit-content;
+      margin-top: 20px;
+    }
+  }
+  

@@ -1,0 +1,113 @@
+<head>
+    <link rel="stylesheet" href="/public/css/pdf/pdf.css?v=2">
+    <link rel="stylesheet" href="/public/css/pdf/custom.css?v=2">
+</head>
+<body>
+    <?php echo $this->render('_pdf/_inc/headerCompany.phtml'); ?>
+    <div class="row mb-xlg">
+        <div class="col-12">
+            <h3 class="text-primary font-weight-bold mb-sm">Inwestycja dostępna także w ofercie sprzedaży ratalnej</h3>
+        </div>
+    </div>
+    <div class="row mb-md">
+        <div class="col-6 mr-sm">
+             <img src="<?php echo ZH_DIR ?>public/images/pcco-form/clientoffer/santander-kredyt.jpeg">
+        </div>
+        <div class="col-6 ml-sm">
+            <p class="small mb-xlg">
+                Firma Hewalex we współpracy z Santander Consumer Bank S.A. oferuje finansowanie całkowitych kosztów 
+                inwestycji zakupu i montażu instalacji fotowoltaicznej w 60 ratach.
+            </p>
+            <p class="font-weight-bold mb-sm">Dlaczego zakup instalacji fotowoltaicznej na raty jest korzystny?</p>
+            <ul class="scattered small pl-md">
+                <li>Instalacja PV obniża rachunki za energię elektryczną i zarabia częściowo na spłatę rat</li>
+                <li>
+                    Po spłacie rat, instalacja fotowoltaiczna przynosi już tylko zyski finansowe, obniżając koszty 
+                    eksploatacji domu, a trwałość paneli PV jest zakładana na min. 25 lat!
+                </li>
+                <li>
+                    Raty to bezpieczna forma finansowania inwestycji. Wysokość rat spłacanych w całym okresie trwania 
+                    kredytu jest stała, niezależnie od zmian wysokości rynkowych stóp procentowych
+                </li>
+            </ul>
+        </div>
+    </div>   
+    <div class="row mb-md">
+        <div class="col-12">
+            <h5 class="font-weight-bold mb-sm">Kalkulacja dla oferowanej instalacji fotowoltaicznej:</h5>
+            <?php
+            $priceNet = OfferForm::getDatasetItemValue($this->offerForm, 'form_options.results', 'totalPrice') ?? 0;
+            $taxData = OfferForm::getDatasetItemValue($this->offerForm, 'form_options.results', 'tax');
+            $priceTax = $taxData['price'];
+            $priceTaxFactor = ($priceTax / 100 + 1);
+            $creditInitialPrice =  $priceNet * $priceTaxFactor;
+            $creditFactor = 1.1425;
+            $loanCount = 60;
+            $loadAmount = $creditInitialPrice * $creditFactor / $loanCount;
+            $creditTotalPrice = $loadAmount * $loanCount;
+            $rrso = '5,51';
+            ?>
+            <table class="credit-summary">
+                <tbody>
+                    <tr>
+                        <td width="35%"><small>Cena towartu brutto:</small></td>
+                        <td width="15%" align="right" class="results">
+                            <?php echo number_format($creditInitialPrice, 0, ',', ' ') ?> zł
+                        </td>
+                        <td width="50%" rowspan="5" class="credit-info">
+                            <ul>
+                                <li>Bez wizyty w banku</li>
+                                <li>Bez wpłaty własnej</li>
+                                <li>Bez prowizji i ubezpieczenia</li>
+                                <li>Bez ukrytych kosztów</li>
+                            </ul>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td width="35%"><small>Liczba rat miesięcznych:</small></td>
+                        <td width="15%" align="right" class="results"><?php echo $loanCount; ?></td>
+                    </tr>
+                    <tr>
+                        <td width="35%"><small>Wysokość raty miesięcznej brutto:</small></td>
+                        <td width="15%" align="right" class="results">
+                            <?php echo number_format($loadAmount, 2, ',', ' '); ?> zł
+                        </td>
+                    </tr>
+                    <tr>
+                        <td width="35%"><small>Całkowita kwota do spłaty:</small></td>
+                        <td width="15%" align="right" class="results">
+                            <?php echo number_format($creditTotalPrice, 2, ',', ' '); ?> zł
+                        </td>
+                    </tr>
+                    <tr>
+                        <td width="35%"><small>Roczna stopa RRSO:</small></td>
+                        <td width="15%" align="right" class="results"><?php echo $rrso; ?>%</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>    
+    </div>
+    <div class="row mb-md">
+        <div class="col-12">
+            <p class="mb-xl">
+                Przyznanie kredytu jest uzależnione od pozytywnej oceny zdolności kredytowej potencjalnego kredytobiorcy 
+                przez Santander Consumer Bank S.A. Niniejszy materiał nie stanowi oferty w rozumieniu Kodeksu cywilnego 
+                i ma charakter wyłącznie informacyjny.
+            </p>
+            <p class="small mb-none">
+                Dla kredytu na zakup towarów i usług oferowanego przez Santander Consumer Bank S.A dla propozycji 60 rat, 
+                zawartego na okres 60 miesięcy, wyliczenia dla przykładu reprezentatywnego na dzień 19.05.2021r. są
+                następujące: Rzeczywista Roczna Stopa Oprocentowania (RRSO) <?php echo $rrso; ?>%; cena towaru 13541 zł; 
+                stała stopa oprocentowania kredytu 0%; całkowita kwota kredytu 15470,59 zł; całkowita kwota do zapłaty
+                15470,59 zł; całkowity koszt kredytu 1929,59zł; wysokość 60 równych rat miesięcznych 257,84 zł. Propozycja
+                kredytu obowiązuje dla umów zawartych do dnia 10.01.2022r. HEWALEX Sp. z o.o. Sp. k. występujący w roli 
+                pośrednika kredytowego informuje swoich klientów o możliwości skorzystania z propozycji kredytu na zakup 
+                towarów i usług oraz przyjmuje oświadczenia o odstąpieniu od umów o kredyt na zakup towarów i usług 
+                zawartych przez Santander Consumer Bank S.A za pośrednictwem HEWALEX Sp. z o.o. Sp. k. Niniejsza 
+                propozycja nie jest ofertą w rozumieniu art. 66 Kodeksu Cywilnego. Decyzja o warunkach i przyznaniu 
+                kredytu z uwzględnieniem oceny aktualnej sytuacji Klienta zostanie podjęta przez Santander Consumer Bank 
+                S.A. Szczegóły na www.santanderconsumer.pl
+            </p>
+        </div>
+    </div>
+</body> 

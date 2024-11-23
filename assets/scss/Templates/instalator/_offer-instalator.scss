@@ -1,0 +1,203 @@
+
+
+.page-template-page-template-instalator-offers {
+ 
+  #offer-wrapper {
+    padding-top: 40px;
+    width: 90%;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    .buttonWrapper {
+      display: flex;
+      justify-content: space-between;
+      border-radius: none !important;
+
+      button {
+        cursor: pointer;
+        width: 50%;
+        padding: 15px 30px;
+        background: #efefe9 !important;
+        font-size: 22px;
+        font-weight: 500;
+      }
+    }
+  }
+    button:hover {
+      background-color: #d5e3ff;
+    }
+
+    button.active {
+      background-color: white;
+      border-bottom: 3px solid #e3a14e;
+      background: #efefe9 !important;
+    }
+
+  //   .active {
+  //     background-color: white;
+  //   }
+
+    .offer-content {
+      display: none;
+      padding: 20px 0px 20px 0px;
+    }
+
+    .offer-content.active {
+      display: block;
+    }
+  // }
+  .gutenberg-content .container {
+    padding-bottom: 150px;
+  }
+  table {
+    border: none !important;
+    padding-top: 50px;
+    tr {
+      border: none !important;
+    }
+    td {
+      background: #efefe9;
+      border: none !important;
+      border-bottom: 1px solid #fbfbfb !important;
+      padding-top: 10px;
+      padding-bottom: 10px;
+      padding-left: 5px;
+      padding-right: 5px;
+      font-weight: 500;
+      width: 100%;
+      a {
+        cursor: pointer;
+        background: #e3a14e !important;
+        color: #ffffff;
+        text-transform: uppercase;
+        font-family: "Mukta", sans-serif;
+        font-size: 12px;
+        font-weight: 500;
+        line-height: 1.625;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        //margin: 0 auto;
+        letter-spacing: 1.6px;
+        padding: 5px 15px;
+        border-radius: 99px;
+        transition: all 0.3s ease-out;
+        border: none !important;
+        width: fit-content;
+      }
+
+      button {
+        cursor: pointer;
+        background: #e3a14e !important;
+        color: #ffffff;
+        text-transform: uppercase;
+        font-family: "Mukta", sans-serif;
+        font-size: 12px;
+        font-weight: 500;
+        line-height: 1.625;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        //margin: 0 auto;
+        letter-spacing: 1.6px;
+        padding: 5px 15px;
+        border-radius: 99px;
+        transition: all 0.3s ease-out;
+        border: none !important;
+        width: fit-content;
+
+        &:disabled {
+          opacity: 0.5;
+          cursor: default;
+        }
+      }
+    }
+    td:nth-child(1) {
+      width: 45%;
+      padding-left: 20px;
+    }
+  }
+}
+
+@media (max-width: 1200px) {
+  .page-template-page-template-instalator-offers {
+    table {
+      td:nth-child(1) {
+        width: 35%;
+      }
+    }
+  }
+}
+
+@media (max-width: 1050px) {
+  .page-template-page-template-instalator-offers {
+    .offer-id {
+      display: flex;
+    }
+    table {
+      td:nth-child(1) {
+        min-width: 220px;
+        padding-left: 20px;
+        display: flex;
+        margin: 0;
+      }
+      td a {
+        font-size: 11px;
+        //width: 140px;
+        white-space: nowrap;
+        padding: 4px 10px;
+        margin: 0;
+      }
+      td button {
+        font-size: 11px;
+        white-space: nowrap;
+        //width: 140px;
+        padding: 4px 10px;
+      }
+    }
+
+    #offer-wrapper {
+      width: 100%;
+      .buttonWrapper {
+        button {
+          font-size: 20px;
+        }
+        button.active {
+          font-size: 20px;
+        }
+      }
+    }
+  }
+
+  .contentWrapper {
+    width: 100%;
+    overflow: auto;
+  }
+  .table {
+    top: 0;
+    width: 100%;
+  }
+}
+
+.page-template-page-template-instalator-calculator-pcwb {
+  .header--desktop__options {
+    align-items: center !important;
+  }
+}
+.page-template-page-template-instalator-calculator-pv {
+  .header--desktop__options {
+    align-items: center !important;
+  }
+}
+
+.page-template-page-template-instalator-calculator-mount {
+  .header--desktop__options {
+    align-items: center !important;
+  }
+}
+
+.page-template-page-template-instalator-calculator-pcco {
+  .header--desktop__options {
+    align-items: center !important;
+  }
+}

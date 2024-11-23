@@ -1,0 +1,141 @@
+<body>
+    <div class="row">
+        <div class="col-12">
+            <h5 style="padding-left:15px;" class="title-2 pl-md">WYPOSAŻENIE DODATKOWE OPCJONALNE</h5>
+        </div>
+    </div>
+    <div class="row">
+        <?php
+        asort($offerReport['pumpAdditional']);
+        $additionals = [];
+        $img = [];
+        foreach($offerReport['pumpAdditional'] as $key => $item) {
+            if ($item['img'] ?? false) {
+                $img[] = $item['img'];
+            }
+        }
+        $additionals = array_merge($additionals, array_map(function($item) {
+            return ['src' => $item];
+        }, array_unique($img) ));
+
+
+        foreach($additionals as $key => $item) {
+        ?>
+        <div class="col-4">
+            <div class="col-3">
+                <p class="title-3 text-center"><?php echo ($key + 1) ;?></p>
+            </div>
+            <div class="col-9">
+                <img
+                    src="<?php echo $item['src']; ?>"
+                    class="img-responsive mr-xlg">
+            </div>
+        </div>
+        <?php
+        }
+        ?>
+    </div>
+
+    <div class="row">
+        <div class="col-12">
+            <table class="product-params">
+                <tr>
+                    <th>Nazwa</th>
+                    <th>Nr kat.</th>
+                    <th>Cena kat. netto</th>
+                </tr>
+                <?php
+                $prev = false;
+                $letter = '';
+                $lp = 1;
+                $grouped = [];
+                foreach($offerReport['pumpAdditional'] as $key => $item) {
+                    $grouped[$item['category']] = array_merge($grouped[$item['category']] ?? [], [$item['sku']]);
+                }
+
+
+                foreach($offerReport['pumpAdditional'] as $key => $item) {
+
+                    if ($prev && $prev['category'] != $item['category']) {
+                        $letter = '';
+                        $lp++;
+                    }
+                    if (in_array($item['category'], ['COVER', 'BYPASS']) && count($grouped[$item['category']]) > 1) {
+                        $letter = $letter ? chr(ord($letter) + 1) : chr(97);
+                    }
+
+                    echo '<tr><td class="text-left">'. $lp . $letter  .'. '. $item['type'] .'</td>
+<td class="text-center">'. $item['sku'] .'</td>
+<td class="bg-color-3 text-center">'. $item['price'] .' zł</td></tr>';
+
+                    $prev = $item;
+                }
+                ?>
+            </table>
+        </div>
+    </div>
+
+    <div class="row line-height-16">
+        <div class="col-12 mt10">
+            <h5 style="padding-left:15px;" class="title-2 pl-md text-uppercase">Szczegółowy schemat podłączenia pompy ciepła pcwb w układzie wody basenowej</h5>
+        </div>
+        <div class="col-6">
+            <p>Pompę ciepła PCWB włącza się pomiędzy filtrem wody basenowej (2), a urządzeniem uzdatniającym wodę (4). Układ należy rozbudować o dwa trójniki i zawór regulujący przepływ pomiędzy nimi (3). W ten sposób powstaje tzw. bypass (obejście) wody basenowej. Przez pompę ciepła przepływa jedynie część wody basenowej (zwykle 20-50%), co pozwala zachować natężenie jej przepływu w zakresie pracy pompy obiegu wody basenowej (1). Odpowiednia proporcja zmieszania wody podgrzewanej w pompie ciepła z wodą płynącą obejściem, pozwala uzyskać oczekiwaną temperaturę wody w basenie. Obejście wody (3) pozwala odłączać pompę ciepła od układu w trakcie czyszczenia filtra (2), podczas prac  serwisowych, a także dla demontażu poza sezonem pracy basenu.</p>
+        </div>
+        <div class="col-6">
+          <img src="<?php echo ZH_DIR ?>public/images/pcwb-form/clientoffer/schemat.jpeg" class="img-responsive ml-xlg">
+        </div>
+    </div>
+    <div class="row line-height-16">
+        <div class="col-12">
+            <h5 style="padding-left:15px;" class="title-2 pl-md text-uppercase">PCWB mWiFi - KOMFORTOWA NASTAWA TEMPERATURY WODY</h5>
+        </div>
+        <div class="col-6">
+            <p>Sterownik odporny jest na wpływ warunków zewnętrznych. Zależnie od modelu pompy ciepła zabudowany jest
+                na pompie ciepła lub przeznaczony jest do samodzielnego montażu. Zależnie od modelu pompy ciepła
+                do nastaw na sterowniku należą m.in.: <br/><br/>
+                wybór trybu pracy: AUTOMATYCZNY / GRZANIE / CHŁODZENIE <br/>
+                przedziały czasowe pracy np. dla 2-strefowych taryf zakupu energii
+                nastawa wymaganej temperatury wody basenowej sygnalizacja stanów
+                alarmowych, np. braku przepływu wody. Z modułem mWiFi (nie dotyczy PCWB 4,0kW-A) możliwe jest sterowanie i podgląd pracy za pomocą aplikacji na smartfon (aplikacja w
+                jęz. angielskim).</p>
+        </div>
+        <div class="col-6">
+          <img src="<?php echo ZH_DIR ?>public/images/pcwb-form/clientoffer/pcwb-aqua-qrcode.jpeg" class="img-responsive ml-xlg">
+        </div>
+    </div>
+    <div class="row line-height-16">
+        <div class="col-12">
+            <h5 style="padding-left:15px;" class="title-2 pl-md">Kontakt</h5>
+        </div>
+        <div class="col-3">
+            <p class="ml-md">
+                <strong>HEWALEX Sp. z o.o. Sp. K.</strong><br/>
+                ul. Słowackiego 33, <br/>
+                43-502 Czechowice-Dziedzice, <br/>
+                e-mail: hewalex@hewalex.pl <br/>
+                <strong>www.hewalex.pl</strong><br/><br/>
+                tel. +48 (32) 214 17 10, <br/>
+                        +48 723 232 232
+            </p>
+        </div>
+        <div class="col-4">
+            <p class="ml-md">
+                <strong>Numery wewnętrzne:</strong><br/>
+                Dział sprzedaży krajowej - <strong>350</strong><br/>
+                Dział sprzedaży zagranicznej - <strong>360</strong><br/>
+                <strong>Dział doradztwa technicznego</strong><br/>
+                Technika solarna - <strong>130</strong><br/>
+                Pompy ciepła - <strong>180</strong><br/>
+                Fotowoltaika - <strong>450</strong><br/>
+                Dział serwisu - <strong>340</strong>
+            </p>
+        </div>
+        <div class="col-5">
+            <p class="ml-md">
+                UWAGA:<br/>
+                Podane ceny są aktualne na dzień 10.02.2022r. Informacje nie stanowią oferty handlowej w rozumieniu art. 66, ust. 1 Kodeksu Cywilnego. Zastrzegamy sobie możliwość zmian technicznych związanych z rozwojem produktów, a także zmian cen.
+            </p>
+        </div>
+    </div>
+</body>

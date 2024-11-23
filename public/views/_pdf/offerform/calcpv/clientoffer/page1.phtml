@@ -1,0 +1,61 @@
+<?php
+use Develtio\ZonesHewalex\API\model\ZH_OfferForm;
+use Develtio\ZonesHewalex\API\model\ZH_OfferFormPv;
+?>
+<body>
+    <?php echo (new ZH_OfferFormPv)->render(ZH_DIR . 'public/views/_pdf/_inc/headerCompany.phtml'); ?>
+    <div class="customer-info">
+        <div class="row">
+            <div class="col-12">
+                <h4 class="mb-sm">Opracowanie wykonane dla:</h4>
+                <?php
+                if ($clientName = (new ZH_OfferForm)->getContactValue('pv_name')) {
+                    echo '<p class="mb-none">Sz. P. '. $clientName.'</p>';
+                }
+                $id = (new ZH_OfferForm)->getIdOffer();
+                $dateCreated = get_the_modified_date('d.m.Y', $id);
+                ?>
+                <p class="mb-sm">Email: <?php echo (new ZH_OfferForm)->getContactValue('pv_mail'); ?></p>
+                <p>Data wykonania opracowania: <?php echo $dateCreated; ?></p>
+            </div>
+        </div>
+    </div>
+    <div class="main-page-content">
+        <div class="row">
+            <h2 class="text-primary text-center title">
+                <strong>Wyniki doboru instalacji fotowoltaicznej wraz<br/>z ofertą i analizą ekonomiczną</strong>
+            </h2>
+        </div>
+        <div class="row mb-sm">
+            <div class="col-4">
+                  <img src="<?php echo ZH_DIR ?>public/images/pcco-form/clientoffer/_MG_3337.jpeg">
+            </div>
+            <div class="col-4 ml-sm">
+                  <img src="<?php echo ZH_DIR ?>public/images/pcco-form/clientoffer/_MG_3797.jpeg">
+            </div>
+        </div>
+        <div class="row mb-sm">
+            <div class="col-4 col-offset-2">
+                 <img src="<?php echo ZH_DIR ?>public/images/pcco-form/clientoffer/_MG_4006.jpeg">
+            </div>
+            <div class="col-4 ml-sm">
+                 <img src="<?php echo ZH_DIR ?>public/images/pcco-form/clientoffer/_MG_4062.jpeg">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-10 col-offset-2">
+                <div class="main-page-info">
+                    <h4 class="mb-sm">Dlaczego warto wybrać instalację fotowoltaiczną firmy Hewalex?</h4>
+                    <ul>
+                        <li>to wiarygodny partner dla Klientów i Instalatorów</li>
+                        <li>to polski producent i dostawca w branży OZE od 30 lat</li>
+                        <li>oferuje sprawdzone produkty najwyższej jakości i sprawności</li>
+                        <li>posiada wysokie kompetencje i proponuje optymalne rozwiązania</li>
+                        <li>udziela wydłużonych okresów gwarancji realizowanych na miejscu w kraju</li>
+                        <li>dostarczył urządzenia do ponad 200.000 systemów OZE na całym świecie</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>

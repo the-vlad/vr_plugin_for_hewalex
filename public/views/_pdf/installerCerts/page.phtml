@@ -1,0 +1,57 @@
+<head>
+    <style type="text/css">
+        body {
+            font-family:Sans-serif;
+            color:#000;
+        }
+        .number {
+            position:absolute;
+            right:55px;
+            top: 395px;
+            font-size:16px;
+            font-weight: bold;
+            width:130px;
+        }
+        #content {
+            position:absolute;
+            left: 84px;
+            top: 480px;
+            font-size:20px;
+            font-weight: bold;
+            width:700px;
+        }
+        #signature {
+            position:absolute;
+            top:850px;
+            right:70px;
+            width: 250px;
+            text-align: center;
+            font-size:14px;
+        }
+        #date {
+            position:absolute;
+            top:1000px;
+            right: 80px;
+            font-size:12px;
+            width:250px;
+            text-align: right;
+        }
+    </style>
+</head>
+<body>
+        <div class="PV number">
+            <?php echo $this->cert['number']; ?>
+        </div>
+        <div id="content">
+            <?php echo $this->content['NAZWA_FIRMY']; ?><br/>
+            <?php echo $this->content['ADRES']; ?>
+        </div>
+        <div id="signature">
+            <?php echo $this->signature; ?><br/>
+            Hewalex Sp. z o.o. Sp. k.
+        </div>
+
+        <div id="date">
+            Czechowice - Dziedzice dn. <?php echo $this->cert['date']; ?>
+        </div>
+</body>

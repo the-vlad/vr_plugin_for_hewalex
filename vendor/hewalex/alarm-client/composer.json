@@ -1,0 +1,27 @@
+{
+    "name": "hewalex/alarm-client",
+    "description": "Hewalex Alarm client",
+    "type": "library",
+    "license": "proprietary",
+    "authors": [
+        {
+            "name": "Dawid Wrobel",
+            "email": "dawid.wrobel@hewalex.pl"
+        }
+    ],
+    "repositories": [{
+        "type": "composer",
+        "url": "https://composer.hewalex-dev.pl"
+    }],
+    "require": {
+        "hewalex/client": "^0.1.1"
+    },
+    "autoload": {
+        "psr-4": {
+            "Hewalex\\AlarmClient\\": "src/"
+        }
+    },
+    "config": {
+        "preferred-install": "dist"
+    }
+}

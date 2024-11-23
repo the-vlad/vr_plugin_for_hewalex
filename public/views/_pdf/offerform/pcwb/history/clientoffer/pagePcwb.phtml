@@ -1,0 +1,80 @@
+<body>
+    <div class="row">
+        <div class="col-12">
+            <h5 class="title-2 pl-md">POMPA CIEPŁA WODY BASENOWEJ HEWALEX
+                <br/><?php echo $offerReport['pump']['type']; ?></h5>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-2 mt20">
+            <img width="200px" src="<?php echo ZH_DIR ?>public/logos/hewalex-no-pad.svg" class="img-responsive ml-xl">
+        </div>
+        <div class="col-7">
+            <div class="m-xlg mt-none ml-none"><img src="<?php echo $offerReport['pump']['img']; ?>"
+                     class="img-responsive"></div>
+        </div>
+        <div class="col-1">
+            <div class="img-4years"><img  src="<?php echo ZH_DIR ?>public/images/pcwb-form/clientoffer/4lata_gwarancji.jpeg" class="m-xl"></div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12 mt30">
+            <table class="product-params product-params2">
+                <tr>
+                    <th>Parametry</th>
+                    <th>Wartość</th>
+                    <th>Parametry</th>
+                    <th>Wartość</th>
+                </tr>
+                <?php
+                $i = 1;
+                foreach($offerReport['pumpParams'] as $item) {
+                    if (($i%2)) {
+                        echo '<tr>';
+                    }
+
+                    echo '<td class="text-center">'.$item['label'] .'</td><td class="text-center bg-color-3">'. $item['value'] .'</td>';
+
+                    if (!($i%2)) {
+                        echo '</tr>';
+                    }
+                    $i++;
+                }
+                ?>
+            </table>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-7 col-offset-2 mt30">
+            <ul class="list-none">
+                <li>→ &nbsp;Wysoki komfort i niskie koszty korzystania z wody basenowej</li>
+                <li>→ &nbsp;Szczególnie wysoka efektywność pracy pomp ciepła: COP do 16</li>
+                <li>→ &nbsp;Łatwe i szybkie prace montażowe - bezpośrednie podłączenie wody</li>
+                <li>→ &nbsp;Estetyczna i odporna na warunki zewnętrzne obudowa pompy ciepła</li>
+                <li>→ &nbsp;Łatwy demontaż dla przechowywania urządzenia po sezonie pracy</li>
+            </ul>
+        </div>
+        <div class="col-12"></div>
+    </div>
+    <div class="row">
+        <div class="col-12 mt30"></div>
+        <div class="col-12 text-center">
+        <?php
+        if ($offerReport['pump']['category'] == 'PCWBi') {
+            $icons = ['zbiornik-pcwb.jpg?v=2', 'PCWB_sterownik.jpg?v=1', 'PCWB_obudowa.jpg?v=1', 'abs.jpg?v=2', 'r32.jpg?v=2', 'funkcje.jpg?v=2', 'aqua-temp.jpg', 'mwifi.jpg'];
+        } else {
+            $icons = ['zbiornik-pcwb.jpg?v=2', 'lcd.jpg?v=2', 'abs.jpg?v=2', 'r32.jpg?v=2', 'funkcje.jpg?v=2', 'aqua-temp.jpg', 'mwifi.jpg'];
+        }
+
+        if ($offerReport['pump']['icons'] ?? 0) {
+            $icons = $this->offerReport['pump']['icons'];
+        }
+
+        foreach($icons as $img) {
+            echo '<img src="' . ZH_DIR . 'public/images/product/ikonki/'. $img .'" class="img-icon">';
+        }
+        ?>
+        </div>
+    </div>
+</body>

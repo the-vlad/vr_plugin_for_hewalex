@@ -1,0 +1,43 @@
+@import "../../breakpoints.scss";
+
+.hewalex-my-account {
+    padding-bottom: 100px;
+    &__orders{
+    @include respond-below(md) {
+      overflow-x:auto;
+      }
+    }
+    .your-order-table {
+      width: 100%;
+      border-collapse: collapse;
+      th {
+        background: #e3a14e;
+        color: #fff;
+        padding: 5px 10px;
+        font-weight: 600;
+        text-align: left;
+      }
+      td {
+        padding: 5px 10px;
+        background: #f9f9f9;
+      }
+      tr {
+        border-bottom: 1px solid #ddd;
+      }
+  
+      td a {
+        background: #e3a14e;
+        padding: 5px 10px;
+        color: white;
+        font-size: 13px;
+        display:flex;
+        width:130px;
+        justify-content: center;
+        border-radius:90px;
+        @include respond-below(md) {
+           font-size:12px;
+          }
+      }
+    }
+  }
+  

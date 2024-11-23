@@ -1,0 +1,23 @@
+{
+    "name": "develtio/zones-hewalex",
+    "autoload": {
+        "psr-4": {
+            "Develtio\\ZonesHewalex\\": "includes/"
+        }
+    },
+    "repositories": [{
+        "type": "composer",
+        "url": "https://develtio-composer.hewalex-dev.pl"
+    }],
+    "type": "wordpress-plugin",
+    "require": {
+        "stoutlogic/acf-builder": "^1.12",
+        "mpdf/mpdf": "^8.0",
+        "laravel/helpers": "^1.5",
+        "php-ai/php-ml": "^0.9.0",
+        "league/csv": "^9.2",
+        "league/flysystem": "^1.0",
+        "hewalex/alarm-client": "^0.1.1",
+        "guzzlehttp/guzzle": "^6.3"
+    }
+}

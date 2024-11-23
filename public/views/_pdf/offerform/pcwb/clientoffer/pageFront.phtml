@@ -1,0 +1,128 @@
+<?php
+use Develtio\ZonesHewalex\API\model\ZH_OfferForm;
+?>
+<body>
+    <div class="row">
+        <div class="col-6">
+            <p class="mb-none">Czechowice-Dziedzice</p>
+            <?php
+            $id = (new ZH_OfferForm())->getIdOffer();
+            $dateCreated = get_the_modified_date('d.m.Y', $id);
+            ?>
+            <p class="mb-sm"><?php echo $dateCreated; ?></p>
+        </div>
+        <div class="col-6 text-right">
+              <img width="200px" src="<?php echo ZH_DIR ?>public/logos/hewalex-no-pad.svg">
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-6 text-left">
+            <div class="col-12">
+                <p style="padding-left:15x;" class="col-4 mb-none title-1 font-weight-bold">Dla:</p>
+            </div>
+            <div class="col-12">
+                <p class="col-4 mr-sm mb-none">Imię i nazwisko</p>
+                <p class="col-6 mb-none text-left"><?php echo (new ZH_OfferForm())->getContactValue('pcwb_name'); ?></p>
+            </div>
+            <div class="col-12">
+                <p class="col-4 mr-sm mb-none">E-mail</p>
+                <p class="col-6 mb-none text-left"><?php echo (new ZH_OfferForm())->getContactValue('pcwb_mail'); ?></p>
+            </div>
+            <div class="col-12">
+                <p class="col-4 mr-sm mb-none">Telefon</p>
+                <p class="col-6 mb-none text-left"><?php echo (new ZH_OfferForm())->getContactValue('pcwb_phone'); ?></p>
+            </div>
+            <div class="col-12">
+                <p class="col-4 mr-sm mb-none">Kod pocztowy</p>
+                <p class="col-6 mb-none text-left"><?php echo (new ZH_OfferForm())->getContactValue('pcwb_postcode'); ?></p>
+            </div>
+        </div>
+        <div class="col-6 text-left">
+            <div class="col-12">
+                <!-- <p class="col-4 mb-none title-1 font-weight-bold">Doradca handlowy:</p> -->
+            </div>
+            <div class="col-12">
+                <p class="col-6 mb-none text-left"><?php //echo $this->ph->name . ' ' . $this->ph->surname; ?></p>
+            </div>
+            <div class="col-12">
+                <p class="col-6 mb-none text-left"><?php //echo $this->ph->email; ?></p>
+            </div>
+            <div class="col-12">
+                <p class="col-6 mb-none text-left"><?php //echo $this->ph->phone; ?></p>
+            </div>
+        </div>
+
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <h4 class="mb-none font-weight-bold text-center">
+                <?php
+                echo "Nr oferty: {$id}";
+                ?>
+            </h4>
+        </div>
+        <div class="col-12">
+            <h5 class="title-2 text-center">Raport doboru pompy ciepła wody basenowej</h5>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <table class="offer">
+                <tr>
+                    <th class="width-1 border-none"></th>
+                    <th class="width-2">Model</th>
+                    <th class="width-3">Nr kat.</th>
+                    <th class="width-4">Cena kat. netto</th>
+                    <th class="width-5">Ilość sztuk</th>
+                    <th class="width-6">Cena kat. netto łącznie</th>
+                </tr>
+                <?php
+                foreach($offerReport['pumpOffer']['item'] as $key => $offer) {
+                    echo '<tr>
+                             <td class="text-left font-weight-bold background-none border-none">Oferta '. ($key + 1).'</td>
+                             <td class="text-center">'. $offer['model'] .' </td>
+                             <td class="text-center">'. $offer['sku'] .'</td>
+                             <td class="text-center">'. $offer['price'].' zł</td>
+                             <td class="text-center">'. $offer['quantity'] .'</td>
+                             <td class="text-center">'. $offer['total_price'].' zł</td>
+                          </tr>';
+                }
+                ?>
+                <tr>
+                    <td colspan="4" class="background-none border-none"></td>
+                    <td class="font-weight-bold text-right">SUMA</td>
+                    <td class="font-weight-bold text-center"><?php echo data_get($offerReport, 'pumpOffer.summary.price'); ?></td>
+                </tr>
+            </table>
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12 mt30">
+            <table class="product-params">
+                <tr>
+                    <th>Parametry basenu*</th>
+                    <th>Dane</th>
+                </tr>
+                <?php
+                foreach($offerReport['pumpParams'] as $item) {
+                    echo '<tr><td class="text-center">'. $item['label'] .'</td><td class="bg-color-3 text-center">'. $item['value'] .'</td></tr>';
+                }
+                ?>
+                <tr><td colspan="2" class="mt20">&nbsp;</td></tr>
+                <tr>
+                    <th>Obliczenia mocy cieplnej basenu</th>
+                    <th>Dane</th>
+                </tr>
+                <?php
+                foreach($offerReport['pumpHeatPower'] as $item) {
+                    echo '<tr><td class="text-center">'. $item['label'] .'</td><td class="bg-color-3 text-center">'. $item['value'] .'</td></tr>';
+                }
+                ?>
+            </table>
+        </div>
+        <div class="col-12 mt20 text-center">
+            <p>*Pozostałe parametry zostały założone na podstawie średnich wartości statystycznych w Polsce</p>
+        </div>
+    </div>
+</body>

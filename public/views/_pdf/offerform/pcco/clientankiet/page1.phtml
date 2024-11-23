@@ -1,0 +1,113 @@
+<?php
+use Develtio\ZonesHewalex\API\model\ZH_OfferForm;
+use Develtio\ZonesHewalex\API\model\ZH_OfferFormPCCO;
+?>
+    <body>
+    <div class="row header">
+        <div class="col-6">
+            <?php
+            $id = (new ZH_OfferForm())->getIdOffer();
+            $dateCreated = get_the_modified_date('d.m.Y', $id);
+            ?>
+            <h5><?php echo $dateCreated; ?></h5>
+        </div>
+        <div class="col-6 text-right">
+            <img width="200px" src="<?php echo ZH_DIR ?>public/logos/hewalex-no-pad.svg">
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12 mb-md">
+            <h2 class="text-primary text-center font-weight-bold mt-xl mb-none">
+                Ankieta klienta dla doboru pompy ciepła PCCO
+            </h2>
+            <h5 class="text-primary text-center font-weight-bold">
+                <?php
+                echo "ID zgłoszenia: {$id}";
+                ?>
+            </h5>
+        </div>
+        <div class="col-12">
+            <?php
+            $optionsArr = (new ZH_OfferForm())->getContactValue('pcco_options');
+            $arrOptions = json_decode($optionsArr, true);
+            $contactArr = (new ZH_OfferForm())->getContactValue('pcco_contact');
+            $arrContacts = json_decode($contactArr, true);
+            $offerFormWithModelsTree = (new ZH_OfferFormPCCO())->getExactFormWithModels($arrOptions, $arrContacts, ['grouped' => true]);
+
+            $formContent = '';
+            renderPrintableOfferForm($offerFormWithModelsTree, $formContent);
+            echo $formContent;
+            ?>
+        </div>
+    </div>
+    </body>
+
+<?php
+function renderPrintableOfferForm($group, &$content, $heading = 1) {   
+    $groupHidden = $group['hidden']['print'] ?? $group['hidden'] ?? false;
+    if ($groupHidden || isGroupEmpty($group)) {
+        return;
+    }
+    if ($group['label'] ?? null) { 
+        $margins = [
+            3 => 'mb-lg mt-xl',
+            5 => 'mb-xs mt-sm'
+        ];
+        $content .= '<h'.$heading.' class="text-primary text-center '.($margins[$heading] ?? '').'">
+            <strong>'. $group['label'] .':</strong>
+        </h'.$heading.'>';
+    }
+    if ($group['groups'] ?? null) {
+        $subHeading = $heading+2;
+        foreach ($group['groups'] as $subGroup) {
+            renderPrintableOfferForm($subGroup, $content, $subHeading);
+        }
+    }
+    if ($group['models'] ?? null) {
+        $groupContent = '<table width="100%">';
+        foreach ($group['models'] as $model) {
+            if ($model['hidden']['print'] ?? $model['hidden'] ?? false) {
+                continue;
+            }
+
+            $value = $model['value'];
+            $selectedId = $model['selectedId'] ?? null;
+            if ($selectedId) {
+                $valueModel = array_first($model['options'], function ($option) use ($selectedId) {
+                    return $option['id'] === $selectedId;
+                });
+                $value = $valueModel['displayName'] ?? "<span class='error'>{$model['value']}</span>";
+            }
+            if (($model['type'] ?? null) === 'checkbox') {
+                $value = $value == 1 ? 'Tak' : 'Nie';
+            }
+            $name = $model['label']['print'] ?? $model['label'] ?? "<span class='error'>{$model['paramId']}</span>";
+            $unit = $model['unit'] ?? '';
+
+            $groupContent .= ''
+            . '<tr>'
+                . '<td class="va-top">'. $name .':</td>'
+                . '<td width="35%" class="va-top">'. $value .' '. $unit .'</td>'
+            . '</tr>';
+        }
+        $groupContent .= '</table>';
+        $content .= $groupContent;
+    }
+}  
+
+function isGroupEmpty($group) {
+    if (!($group['groups'] ?? null) && !($group['models'] ?? null)) {
+        return true;
+    }
+    if ($group['groups']) {
+        return false;
+    }
+    $hidden = true;
+    foreach ($group['models'] as $model) {
+        $modelHidden = $model['hidden']['print'] ?? $model['hidden'] ?? false;
+        if (!$modelHidden) {
+            return false;
+        }
+    }
+    return $hidden;
+}

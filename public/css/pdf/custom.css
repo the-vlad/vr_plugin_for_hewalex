@@ -1,0 +1,93 @@
+.header {
+    margin-bottom: 25px;
+}
+
+.title {
+    padding: 0 30px
+}
+
+.customer-info {
+    height: 150px;
+}
+
+.main-page-content {
+    margin-top: 50px;
+}
+
+.main-page-info {
+    background-color: #0a2e62;
+    color: #fff;
+    padding: 10px 10px 5px;
+}
+.main-page-info h4 {
+    color: #fff;
+}
+.text-uppercase {
+    text-transform: uppercase;
+}
+.text-underline {
+    text-decoration: underline;
+}
+table.financing-summary {
+    width: 100%;
+    background-color: #efefef;   
+}
+table.financing-summary td {
+    width: 50%;
+    font-size: 16px;
+    padding: 4px 25px;
+    border-bottom: 2px solid #bbb;
+    color: #555;
+}
+table.financing-summary tr.highlighted {
+    background-color: #0088cc;
+}
+table.financing-summary tr.highlighted td {
+    color: white;
+    font-weight: bold;
+    border-bottom: none;
+    padding: 15px 25px;
+}
+
+table.credit-summary {
+    width: 100%;
+    background-color: #ddebf6;
+}
+table.credit-summary td {
+    vertical-align: middle;
+    border-bottom: 4px solid #fff;
+    padding: 5px;
+}
+table.credit-summary td.results {
+    border-right: 15px solid #fff;
+}
+table.credit-summary td.credit-info {
+    padding-left: 25px;
+    line-height: 20px
+}
+
+table.summary-contact {
+    width: 100%;
+}
+table.summary-contact th {
+    text-align: left;
+}
+
+.summary-header {
+    background-color: #d6dce4;
+}
+
+table.summary-products {
+    width: 100%
+}
+table.summary-products td {
+    text-align: center;
+}
+table.summary-products td.name {
+    text-align: left;
+}
+
+.offer-economy-chart {
+    max-height: 320px;
+    width: auto;
+}

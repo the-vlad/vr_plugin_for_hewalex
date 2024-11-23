@@ -1,0 +1,117 @@
+.page-template-page-template-instalator-oze {
+  .alert-prepaid {
+    background-color: #f2dede;
+    border-color: #ebccd1;
+    padding: 25px;
+  }
+  .oze-html {
+    display: flex;
+    width: 100%;
+    overflow: hidden;
+    img {
+      width: 100%;
+      height: auto;
+      object-fit: cover;
+      transition: all 0.2s ease-in-out;
+      &:hover {
+        transform: scale(1.1);
+        transition: all 0.2s ease-in-out;
+      }
+    }
+  }
+  .point_box {
+    width: 100%;
+    background: #efefe9;
+    padding: 25px;
+
+    .form-group {
+      margin-bottom: 0px;
+    }
+    @include respond-below(md) {
+      width: 100%;
+      margin-bottom: 20px;
+    }
+    h4 {
+      padding-bottom: 15px;
+    }
+    form {
+      // width:50%;
+      display: flex;
+      align-items: center;
+      .form-group {
+        width: 60%;
+      }
+      .submit-group {
+        width: 30%;
+        margin-left: 20px;
+        button {
+          height: 48px;
+          width: 100%;
+          background: #e3a14e !important;
+          border: none !important;
+          outline: none !important;
+          border-radius: 5px;
+          font-size: 18px;
+          font-weight: 400 !important;
+          letter-spacing: 0px !important;
+          text-transform: capitalize;
+          i {
+            display: none !important;
+          }
+        }
+      }
+      input {
+        width: 100%;
+        background: #fff;
+      }
+      input[type="text"]:not(:placeholder-shown),
+      input[type="email"]:not(:placeholder-shown),
+      input[type="tel"]:not(:placeholder-shown),
+      select:not(:placeholder-shown) {
+        border: 1px solid #e3a14e;
+      }
+    }
+  }
+  .section--page-links .page-links__wrapper {
+    grid-template-columns: repeat(auto-fit, minmax(360px, auto));
+    grid-gap: 32px 40px;
+    .page-links__page__image-wrapper img {
+      object-fit: cover;
+      /* max-height: 271px; */
+      /* max-width: 100%; */
+      transition: all 0.3s ease-out;
+      width: 100%;
+      height: auto;
+    }
+  }
+}
+
+// Lista instalacji
+.list-installer {
+  margin-top:40px;
+  margin-bottom:40px;
+  
+  @include respond-below(md) {
+    overflow-x: auto;
+  }
+  &__table {
+    th {
+      background: #e3a14e;
+      color: #fff;
+      padding: 8px 14px;
+      font-weight: 500;
+      text-align: left;
+      border:none!important;
+      vertical-align: middle;
+    }
+    td {
+      padding: 8px 14px;
+      background: #f9f9f9;
+      vertical-align: middle;
+    }
+    tr {
+      border-bottom: 1px solid #ddd;
+      vertical-align: middle;
+    }
+  }
+}

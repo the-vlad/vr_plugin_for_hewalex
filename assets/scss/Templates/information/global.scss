@@ -1,0 +1,130 @@
+@import "../../breakpoints.scss";
+
+#info-section {
+  padding-top: 50px;
+  padding-bottom: 100px;
+  .item {
+    padding-top: 25px;
+    padding-bottom: 25px;
+    border-bottom: 2px solid #efefe9;
+  }
+  .info-row {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .item__image {
+    height: fit-content;
+  }
+  .item__cta {
+    position: absolute;
+    right: 0px;
+    bottom: 20px;
+  }
+  .item {
+    display: flex;
+    justify-content: space-between;
+  }
+  .item_block--left {
+    display: flex;
+    width: 8%;
+    .datebox {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      width: 100%;
+      height: 90px;
+
+      h4 {
+        background: #efefe9;
+        text-align: center;
+        margin-bottom: 0px;
+        padding-top: 8px;
+        padding-bottom: 8px;
+      }
+      p {
+        background-color: #e3a14e;
+        color: #fff;
+        padding: 5px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        font-weight: 500;
+        @include respond-below(md) {
+          font-size:12px;
+        }
+      }
+    }
+    @include respond-below(md) {
+      width: 15%;
+    }
+  }
+  .item_block--right {
+    width: 90%;
+    @include respond-below(md) {
+      width: 75%;
+    }
+  }
+
+  .toggle-content.is-open:after {
+    content: "\f151";
+  }
+
+  .toggle-content {
+    background-color: white;
+    // border-left: 1px solid whitesmoke;
+    // border-right: 1px solid whitesmoke;
+    margin-bottom: 40px;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.2s ease-in-out;
+  }
+  .toggle-item {
+    img {
+      transform: rotate(180deg);
+      width: 15px !important;
+    }
+  }
+  .item:hover .item__cta img {
+    margin-left: 5px !important;
+  }
+
+  .toggle-item a {
+    display: flex;
+    cursor: pointer;
+  }
+  .is-open img {
+    transform: rotate(360deg) !important;
+  }
+  .the-less {
+    display: none;
+  }
+  .is-open {
+    .the-more {
+      display: none;
+    }
+    .the-less {
+      display: block;
+    }
+  }
+  .card--attachments__item {
+    margin-top: 20px;
+    width: fit-content;
+    margin-right: 30px;
+    @include respond-below(md) {
+      width: 100%;
+      display: flex;
+      justify-content: space-around;
+    }
+  }
+  .toggle-desc {
+    padding-top: 15px;
+  }
+  .addfile-row {
+    display: flex;
+    @include respond-below(md) {
+      flex-direction: column;
+    }
+  }
+}

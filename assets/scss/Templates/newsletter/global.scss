@@ -1,0 +1,99 @@
+.newsletter_title_footer {
+  font-weight: 600 !important;
+  color: #ffffff !important;
+  vertical-align: bottom;
+  display: inline-block;
+  position: relative;
+  text-transform: uppercase;
+  &:after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 52px;
+    height: 1px;
+    background: #e3a14e;
+  }
+}
+
+#sm-newsletter {
+  width: 368px;
+  position: relative;
+  input[type="email"] {
+    background: #fff;
+    width: 100%;
+    border: none;
+  }
+  p {
+    color: #fff;
+  }
+
+  input[type="submit"] {
+    background-color: transparent;
+    width: 50px;
+    position: absolute;
+    right: 10px;
+    top: 2px;
+    height: 50px;
+    cursor: pointer;
+    z-index: 99;
+  }
+
+  .submit-btn {
+    content: "";
+    position: absolute;
+    //test icon need change
+    background-image: url(../img/arrow-forward.svg);
+    transform: scale(0.6);
+    background-size: cover;
+    top: 8px;
+    right: 10px;
+    cursor: pointer;
+    height: 30px;
+    width: 30px;
+    cursor: pointer;
+  }
+
+  .sm-gdpr {
+    padding-top: 15px;
+    display: flex;
+    #sm-terms {
+      opacity: 10;
+    }
+    .small-text {
+      color: #fff;
+      &::before {
+        display: none;
+      }
+    }
+  }
+}
+
+#success-message {
+  .the-respond {
+    padding-bottom: 20px;
+    position: relative;
+    display: flex;
+    align-items: baseline;
+  }
+
+  p {
+    color: #fff;
+    margin-left: 14px;
+    font-weight: bold;
+  }
+
+  .checkmark {
+    display: inline-block;
+    transform: rotate(45deg);
+    height: 18px;
+    width: 12px;
+    border-bottom: 5px solid #78b13f;
+    border-right: 5px solid #78b13f;
+  }
+}
+@media only screen and (max-width: 750px) {
+  #sm-newsletter {
+    width: 100%;
+  }
+}

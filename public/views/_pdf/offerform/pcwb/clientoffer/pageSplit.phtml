@@ -1,0 +1,84 @@
+<body>
+    <div class="row">
+        <div class="col-12">
+            <h5 class="title-2 pl-md">POMPY CIEPŁA POWIETRZE-WODA PCCO HEWALEX
+                <br/><?php echo strip_tags($offerReport['pump']['type']); ?></h5>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <div class="col-2">
+             <img width="200px" src="<?php echo ZH_DIR ?>public/logos/hewalex-pad.svg" class="img-responsive ml-xlg">
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <?php
+        if ($offerReport['pump']['img2'] ?? false) {
+        ?>
+        <div class="col-6">
+            <div class="m-xlg mt-none"><img src="<?php echo $offerReport['pump']['img1']; ?>"
+                     class="img-responsive"></div>
+        </div>
+        <div class="col-6">
+            <div class="m-xlg mt-none"><img src="<?php echo $offerReport['pump']['img2']; ?>"
+                 class="img-responsive"></div>
+        </div>
+        <?php } else { ?>
+            <div class="col-8 col-offset-2">
+                <div class="m-xlg mt-none"><img src="<?php echo $offerReport['pump']['img1']; ?>"
+                                                class="img-responsive"></div>
+            </div>
+        <?php } ?>
+    </div>
+
+    <div class="row">
+        <div class="col-12 mt30">
+            <table class="product-params product-params2">
+                <tr>
+                    <th>Parametry</th>
+                    <th>Wartość</th>
+                    <th>Parametry</th>
+                    <th>Wartość</th>
+                </tr>
+                <?php
+                $i = 1;
+                foreach($offerReport['pumpParams'] as $item) {
+                    if (($i%2)) {
+                        echo '<tr>';
+                    }
+
+                    echo '<td class="text-center">'.$item['label'] .'</td><td class="text-center bg-color-3">'. $item['value'] .'</td>';
+
+                    if (!($i%2)) {
+                        echo '</tr>';
+                    }
+                    $i++;
+                }
+                ?>
+            </table>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-7 col-offset-2 mt30">
+            <ul class="list-none">
+                <li>→ &nbsp;Wysoki komfort i niskie koszty korzystania z wody basenowej</li>
+                <li>→ &nbsp;System EKONTROL dla zdalnego nadzoru pracy - w standardzie</li>
+                <li>→ &nbsp;Sprężarka inwerterowa typu Twin-Rotary o regulowanej wydajności</li>
+                <li>→ &nbsp;Wysoka efektywność energetyczna: klasa A++ lub A+++</li>
+                <li>→ &nbsp;Estetyczna i odporna na warunki zewnętrzne obudowa pompy ciepła</li>
+            </ul>
+        </div>
+        <div class="col-12"></div>
+    </div>
+    <div class="row">
+        <div class="col-12 mt30"></div>
+        <div class="col-12 text-center">
+        <?php
+        $icons = ['pc-typu-split.jpeg', 'seria-kameleon.jpeg', 'ekontrol.jpeg', 'sprezarka-2xtwin-rotary-dc-inwerter.jpeg', 'sterownik-pg426.jpeg'];
+        foreach($icons as $img) {
+            echo '<img src="' . ZH_DIR . 'public/images/product/ikonki/'. $img .'" class="img-icon">';
+        }
+        ?>
+    </div>
+</body>

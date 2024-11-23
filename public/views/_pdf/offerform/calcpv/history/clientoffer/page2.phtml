@@ -1,0 +1,73 @@
+<?php
+use Develtio\ZonesHewalex\API\model\ZH_OfferForm;
+use Develtio\ZonesHewalex\API\model\ZH_OfferFormPv;
+
+$offer_form_id = isset($_GET['offer_forms']) ? intval($_GET['offer_forms']) : '';
+
+?>
+<body>
+    <?php echo (new ZH_OfferFormPv)->render(ZH_DIR . 'public/views/_pdf/_inc/headerCompany.phtml'); ?>
+    <div class="row">
+        <div class="col-12 mb-md">
+            <h3 class="text-primary font-weight-bold mb-xlg">Analiza ekonomiczna opłacalności inwestycji</h3>
+            <?php
+            $results = (new ZH_OfferForm)->getArrayFromFormOptionsHistoryOffer($offer_form_id, 'form_options', 'results');
+
+            $taxData = (new ZH_OfferForm)->searchArray('tax', 'id', 'value', $results);
+            $priceTax = $taxData['price'];
+            $priceTaxFactor = ($priceTax / 100 + 1);
+
+            $arrSummary = (new ZH_OfferFormPv)->getExactOfferSlcResults($results);
+            $summaryItems = (new ZH_OfferForm)->filterArray($arrSummary);
+            ?>
+            <table class="financing-summary mb-sm">
+                <tbody>
+                <?php
+                foreach ($summaryItems as $summaryItem) {
+                    if ($summaryItem['hidden'] ?? false) {
+                        continue;
+                    }
+                    $value = is_numeric($summaryItem['value'])
+                        ? number_format($summaryItem['value'], 2, ',', ' ')
+                        : $summaryItem['value'];
+                    echo '
+                        <tr class="'. ($summaryItem['highlighted'] ?? false ? 'highlighted' : '') .'">
+                            <td>'. $summaryItem['label'] .'</td>
+                            <td class="text-right">
+                                <big>
+                                    <strong>'. $value . ' ' . ($summaryItem['unit'] ?? '') .'</strong>
+                                </big>
+                            </td>
+                        </tr>';
+                }
+                ?>
+                </tbody>
+            </table>
+        </div>
+        <div class="col-12 text-center">
+            <p>* dla 25 letniego okresu eksploatacji</p>
+        </div>
+        <div class="col-12 text-center clearfix mb-md">
+            <img 
+                class="offer-economy-chart"
+                src="<?php echo (new ZH_OfferForm)->getContactValue('pv_attachment'); ?>">
+            <div class="row line-legend">
+                <div class="col-4 col-offset-2">
+                    <span style="background-color: rgba(220,220,220,1);">&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                    <span>wartość energii wytworzonej<br/>przez instalację PV <strong>Hewalex</strong></span>
+                </div>
+                <div class="col-4">
+                    <span style="background-color: rgba(151,187,205,1);">&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                    <span>wartość inwestycji w<br/>instalację PV <strong>Hewalex</strong></span>
+                </div>
+            </div>
+        </div>
+        <div class="col-12">
+            <small>
+                Okres zwrotu kosztów inwestycji może być jeszcze krótszy, gdy wzrost cen energii w przyszłości będzie 
+                wyższy od zakładanego, gdy bezpośrednio na miejscu zużywana będzie większa ilość energii (zamiast 
+                oddawania jej do sieci) i gdy uwzględni się dotacje i ulgi dla obniżenia własnego wkładu w inwestycję.
+            </small>
+        </div>
+    </div>    
+</body>

@@ -1,0 +1,110 @@
+<?php
+global $wpdb;
+
+$offer_form_id = isset($_GET['offer_forms']) ? intval($_GET['offer_forms']) : '';
+$created_at = "select created_at from offer_forms where offer_form_id LIKE {$offer_form_id}";
+$created_at_arr = $wpdb->get_results($created_at, 'ARRAY_A');
+?>
+<body>
+    <div class="row header">
+        <div class="col-6">
+            <?php
+            $id = $offer_form_id;
+            $dateCreated = date('d.m.Y', strtotime($created_at_arr[0]['created_at']));
+            ?>
+            <h5><?php echo $dateCreated ?></h5>
+        </div>
+        <div class="col-6 text-right">
+              <img width="200px" src="<?php echo ZH_DIR ?>public/logos/hewalex-no-pad.svg">
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12 mb-md">
+            <h2 class="text-primary text-center font-weight-bold mt-xl mb-none">
+                Formularz doboru pomp ciepła PCWB
+            </h2>
+            <h5 class="text-primary text-center font-weight-bold">
+                <?php
+                echo "ID zgłoszenia: {$id}";
+                ?>
+            </h5>
+        </div>
+        <div class="col-12">
+            <?php
+
+
+            $options = "select form_options from offer_forms where offer_form_id LIKE {$offer_form_id}";
+            $contact = "select contact from offer_forms where offer_form_id LIKE {$offer_form_id}";
+            $category = "select offer_form_category from offer_forms where offer_form_id LIKE {$offer_form_id}";
+
+            $options_arr = $wpdb->get_results($options, 'ARRAY_A');
+            $contact_arr = $wpdb->get_results($contact, 'ARRAY_A');
+            $category_arr = $wpdb->get_results($category, 'ARRAY_A');
+
+            $optionsArrNew = json_decode($options_arr[0]['form_options'], true);
+
+            $arrOptions = $optionsArrNew['options'];
+            $arrContacts = json_decode($contact_arr[0]['contact'], true);
+
+            $offerFormWithModelsTree = (new \Develtio\ZonesHewalex\API\model\ZH_OfferFormPCWB())->getExactFormWithModels($arrOptions, $arrContacts, ['grouped' => true]);
+
+            $formContent = '';
+            renderPrintableOfferForm($offerFormWithModelsTree, $formContent);
+            echo $formContent;
+            ?>
+        </div>
+    </div>    
+</body>
+
+<?php
+function renderPrintableOfferForm($group, &$content, $heading = 1) {
+    if ($group['hidden']['print'] ?? $group['hidden'] ?? false) {
+        return;
+    }
+    if ($group['label'] ?? null) { 
+        $margins = [
+            3 => 'mb-lg mt-xl',
+            5 => 'mb-xs mt-sm'
+        ];
+        $content .= '<h'.$heading.' class="text-primary text-center '.($margins[$heading] ?? '').'">
+            <strong>'. $group['label'] .':</strong>
+        </h'.$heading.'>';
+    }
+    if ($group['groups'] ?? null) {
+        $subHeading = $heading+2;
+        foreach ($group['groups'] as $subGroup) {
+            renderPrintableOfferForm($subGroup, $content, $subHeading);
+        }
+    }
+    if ($group['models'] ?? null) {
+        $groupContent = '<table width="100%">';
+        foreach ($group['models'] as $model) {
+            if ($model['hidden']['print'] ?? $model['hidden'] ?? false) {
+                continue;
+            }
+
+            $value = $model['value'] ?? '';
+            $selectedId = $model['selectedId'] ?? null;
+            if ($selectedId) {
+                $valueModel = array_first($model['options'], function ($option) use ($selectedId) {
+                    return $option['id'] === $selectedId;
+                });
+
+                $value = $valueModel['displayName']['form'] ?? $valueModel['displayName'] ?? "<span class='error'>{$model['value']}</span>";
+            }
+            if (($model['type'] ?? null) === 'checkbox') {
+                $value = $value == 1 ? 'Tak' : 'Nie';
+            }
+            $name = $model['label']['default'] ?? $model['label']['custom'] ?? $model['label']['print'] ?? $model['label'] ?? "<span class='error'>{$model['paramId']}</span>";
+            $unit = $model['unit'] ?? '';
+
+            $groupContent .= ''
+            . '<tr>'
+                . '<td class="va-top">'. $name .':</td>'
+                . '<td width="35%" class="va-top">'. $value .' '. $unit .'</td>'
+            . '</tr>';
+        }
+        $groupContent .= '</table>';
+        $content .= $groupContent;
+    }
+}   

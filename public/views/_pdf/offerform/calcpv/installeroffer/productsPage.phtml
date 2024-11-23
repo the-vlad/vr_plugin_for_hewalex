@@ -1,0 +1,252 @@
+<?php
+use Develtio\ZonesHewalex\API\model\ZH_OfferForm;
+use Develtio\ZonesHewalex\API\model\ZH_OfferFormPv;
+?>
+<body>
+<?php echo (new ZH_OfferFormPv)->render(ZH_DIR . 'public/views/_pdf/_inc/headerCompany.phtml'); ?>
+<div class="row mb-xlg">
+    <div class="col-12">
+        <?php
+        $id = (new ZH_OfferForm)->getIdOffer();
+        $offerYear = get_the_modified_date('Y', $id);
+        $offerNumber = "170-{$id}/{$offerYear}";
+        ?>
+        <h3 class="text-primary text-center font-weight-bold mb-none">Oferta nr <?php echo $offerNumber; ?></h3>
+    </div>
+</div>
+<div class="row mb-xlg">
+    <div class="col-12">
+        <table class="summary-contact bordered-columns">
+            <tbody>
+            <tr>
+                <th>Dane kontaktowe:</th>
+                <th>Dla:</th>
+            </tr>
+            <tr>
+                <td>Hewalex Sp. z o.o. Sp. k.</td>
+                <td><?php echo (new ZH_OfferForm)->getContactValue('pv_name') ?? '(nie podano imienia i nazwiska)'; ?></td>
+            </tr>
+            <tr>
+                <td>Dział fotowoltaiki</td>
+                <td>
+                    <?php
+                    $address = (new ZH_OfferForm)->getContactValue('pv_street');
+                    $city = (new ZH_OfferForm)->getContactValue('pv_city');
+                    $zip = (new ZH_OfferForm)->getContactValue('pv_postcode');
+                    $addressElements = array_filter([$address, $zip, $city]);
+                    $fullAddress = implode(', ', $addressElements);
+                    echo ($fullAddress ?: '(brak danych adresowych)');
+                    ?>
+                </td>
+            </tr>
+            <tr>
+                <td>tel. (32) 214 17 10 wew. 450</td>
+                <td>
+                    <?php
+                    $phone = (new ZH_OfferForm)->getContactValue('pv_phone');
+                    $areaCode = (new ZH_OfferForm)->getContactValue('pv_phone_area');
+                    $fullPhoneNumber = "{$areaCode} {$phone}";
+                    echo $phone ? "tel. {$fullPhoneNumber}" : '(nie podano nr telefonu)';
+                    ?>
+                </td>
+            </tr>
+            <tr>
+                <td>fotowoltaika@hewalex.pl</td>
+                <td><?php echo (new ZH_OfferForm)->getContactValue('pv_email') ?? ''; ?></td>
+            </tr>
+            <?php
+            $clientAddress = (new ZH_OfferForm)->getContactValue('pv_street');
+            $clientCity = (new ZH_OfferForm)->getContactValue('pv_city');
+            $clientZip = (new ZH_OfferForm)->getContactValue('pv_postcode');
+            $clientAddressElements = array_filter([$clientAddress, $clientZip, $clientCity]);
+            $fullClientAddress = implode(', ', $clientAddressElements);
+
+            if ($fullClientAddress) {
+                ?>
+                <tr>
+                    <th></th>
+                    <th>Adres inwestycji:</th>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td><?php echo $fullClientAddress; ?></td>
+                </tr>
+            <?php } ?>
+            </tbody>
+        </table>
+    </div>
+</div>
+<div class="row mb-lg">
+    <div class="col-12">
+        <div class="summary-header text-center">
+            <?php
+            $products = (new ZH_OfferForm)->getContactValue('pv_products');
+            $customProducts = (new ZH_OfferForm)->getContactValue('pv_cproducts');
+            $customProductsArr = json_decode($customProducts, true);
+            $basketProducts = json_decode($products, true);
+
+            $offerFormProducts = (new ZH_OfferFormPv)->getClientOfferProducts($basketProducts);
+
+            $panel = (new ZH_OfferFormPv)->getProductByProperty($offerFormProducts, 'group', 'panels');
+            $inverter = (new ZH_OfferFormPv)->getProductByProperty($offerFormProducts, 'group', 'inverters');
+            $switchgear = (new ZH_OfferFormPv)->getProductByProperty($offerFormProducts, 'group', 'switchgears');
+
+            $installationPower = $panel['maxPower'] * $panel['sum'];
+            ?>
+            <h5 class="mb-none">
+                Instalacja fotowoltaiczna o mocy <?php echo number_format($installationPower, 2, ',', ' '); ?> kWp z montażem
+            </h5>
+        </div>
+    </div>
+</div>
+<div class="row mb-lg">
+    <div class="col-12">
+        <table class="summary-products bordered">
+            <tr>
+                <th width="5%">lp.</th>
+                <th width="10%">nr kat.</th>
+                <th>elementy</th>
+                <th width="7%">ilość</th>
+                <th width="7%">jedn.</th>
+            </tr>
+            <tbody>
+            <tr>
+                <td>1</td>
+                <td>-</td>
+                <td class="name">
+                    <strong>
+                        <?php
+                        $setName = '
+                                    Zestaw PV ' . $panel['sum'] . ' ' . $panel['producer'] . ' '
+                            . ($panel['maxPower'] * 1000) . 'W '. $inverter['name'] .' '. $switchgear['model'];
+                        echo $setName;
+                        ?>
+                    </strong>
+                </td>
+                <td>1</td>
+                <td>szt.</td>
+            </tr>
+            <?php
+            $i = 2;
+            foreach ($offerFormProducts as $product) {
+                echo '
+                        <tr>
+                            <td>'. $i++ .'</td>
+                            <td>'. ($product['code'] ?? '-') .'</td>
+                            <td class="name">'. ($product['name'] ?? '(brak nazwy)') .'</td>
+                            <td>'. $product['sum'] .'</td>
+                            <td>'. ($product['unit'] ?? 'szt.') .'</td>
+                        </tr>';
+            }
+            foreach ($customProductsArr ?? [] as $product) {
+                echo '
+                        <tr>
+                            <td>'. $i++ .'</td>
+                            <td>'. ($product['code'] ?? '-') .'</td>
+                            <td class="name">'. ($product['name'] ?? '(brak nazwy)') .'</td>
+                            <td>'. ($product['sum'] ?? '') .'</td>
+                            <td>'. $product['unit'] .'</td>
+                        </tr>';
+            }
+            ?>
+            </tbody>
+        </table>
+    </div>
+</div>
+<div class="row mb-lg">
+    <div class="col-10">
+        <div class="summary-header text-right">
+            <?php
+            $results = (new ZH_OfferForm)->getContactValue('pv_results');
+            $arrResults = json_decode($results, true);
+
+            $taxData = (new ZH_OfferForm)->searchArray('tax', 'id', 'value', $arrResults);
+            $priceTax = $taxData['price'];
+            $priceTaxFactor = ($priceTax / 100 + 1);
+            ?>
+            <h5 class="mb-none">Razem <?php echo $priceTax > 0 ? 'brutto' : 'netto' ?>:</h5>
+        </div>
+    </div>
+    <div class="col-2">
+        <div class="summary-header text-right">
+            <?php
+            $priceInfo = (new ZH_OfferForm)->searchArray('totalPrice', 'id', 'value', $arrResults);
+            $priceGross = $priceInfo * $priceTaxFactor;
+            $totalPrice = number_format($priceGross, 0, ',', ' ') . ' ' . 'zł';
+            ?>
+            <h5 class="mb-none"><?php echo $totalPrice; ?></h5>
+        </div>
+    </div>
+</div>
+<div class="row mb-xlg">
+    <div class="col-12">
+        <?php
+        $options = (new ZH_OfferForm)->getContactValue('pv_options');
+        $arrOptions = json_decode($options, true);
+
+        $offerValidPeriod = (new ZH_OfferForm)->searchArray('offerValidPeriod', 'id', 'value', $arrOptions) ?? 30;
+        $orderDeadline = (new ZH_OfferForm)->searchArray('orderDeadline', 'id', 'value', $arrOptions) ?? 45;
+        ?>
+        <p class="small mb-none">Oferta ważna jest przez <?php echo $offerValidPeriod; ?> dni</p>
+        <p class="small mb-none">Termin realizacji zamówienia wynosi do <?php echo $orderDeadline; ?> dni roboczych od zaksięgowania wpłaty.</p>
+        <p class="small mb-none">Podane ceny zawierają koszt transportu i montażu zestawu u Klienta.</p>
+        <?php if ($priceTax > 0) {
+            ?>
+            <p class="small mb-none">Podane ceny zawierają podatek VAT w wysokości <?php echo $priceTax; ?>%.</p>
+            <?php
+        } else {
+            ?>
+            <p class="small mb-none">Do podanych cen należy doliczyć podatek VAT w wysokości 23%.</p>
+            <?php
+        } ?>
+        <p class="small mb-none">Oferta wstępna - nie stanowi oferty handlowej w rozumieniu art. 66, ust. 1 Kodeksu Cywilnego.</p>
+        <p class="small mb-none">
+            Wszystkie elementy instalacji powinny zostać dobrane przez projektanta z odpowiednimi uprawnieniami.
+            Wykonanie projektu technicznego jest warunkiem prawidłowej pracy instalacji.
+        </p>
+    </div>
+</div>
+<div class="row">
+    <div class="col-12">
+        <?php
+        $visibleProductCardsProdutsGroups = ['panels', 'inverters'];
+        $html = '';
+        if ($offerFormProducts) {
+            echo '<h5 class="mb-sm">Karty katalogowe produktów:</h5>';
+        }
+        foreach ($offerFormProducts ?? [] as $product) {
+            if (!($product['productCard'] ?? null) || !array_intersect($visibleProductCardsProdutsGroups, $product['group'])) {
+                continue;
+            }
+
+            $html .= '
+                    <div class="">
+                      <a href="' . ZH_URL . 'public/pliki/pobierz/'. $product['productCard'] .'">      
+                            <button 
+                                type="button" 
+                                class="btn btn-wizja-lokalna btn-lg mr-md text-uppercase">'. $product['name'] .'
+                            </button>
+                        </a>
+                    </div>';
+        }
+        echo $html;
+        ?>
+    </div>
+</div>
+<div class="row footer">
+    <div class="col-6">
+        <div class="pt-xl pr-sm">
+            <h6 class="text-primary font-weight-bold">
+                Pobierz karty katalogowe oferowanych produktów.<br/>
+                Zapoznaj się ze wzorem umowy na wykonanie instalacji fotowoltaicznej.<br/>
+                Zamów wizję lokalną w miejscu planowanej inwestycji.
+            </h6>
+        </div>
+    </div>
+    <div class="col-6">
+        <a href="/strony/wizja-lokalna-pv.html?offerHash=<?php echo (new ZH_OfferForm)->getContactValue('pv_hash') ?>">
+            <img src="<?php echo ZH_DIR ?>public/images/pcco-form/clientoffer/wizja-lokalna-link.jpeg" class="img-responsive mr-xlg">
+        </a>
+    </div>
+</div>
+</body>           

@@ -1,0 +1,71 @@
+/* Supervised table */
+
+@import "../../breakpoints.scss";
+
+@mixin icon-parent {
+  cursor: pointer;
+  display: flex;
+}
+
+@mixin icon-size {
+  width: 20px;
+  height: auto;
+}
+
+.supervised-table {
+    margin-top:40px;
+    margin-bottom:40px;
+ 
+  .edit-block{
+    display:flex; 
+  } 
+  @include respond-below(md) {
+    overflow-x: auto;
+  }
+  overflow-x: auto;
+  .action_remove {
+    @include icon-parent;
+    justify-content: center;
+    .ico-bin {
+      @include icon-parent;
+    }
+  }
+
+  .ico-danger {
+    @include icon-size;
+    margin-right: 5px;
+  }
+
+  .ico-warning {
+    @include icon-size;
+    margin-right: 5px;
+  }
+
+  .ico-success {
+    @include icon-size;
+  }
+
+  .text-danger {
+    color: #db4a79;
+    font-weight: bold;
+  }
+
+  .text-color-green {
+    color: #dba31f;
+  }
+
+  .action_edit {
+    display: flex;
+    margin-right: 5px;
+    width: 18px;
+    height: auto;
+  }
+
+  .action_temp_access {
+    @include icon-parent;
+    .ico-redirect {
+      width: 17px;
+      height: auto;
+    }
+  }
+}
